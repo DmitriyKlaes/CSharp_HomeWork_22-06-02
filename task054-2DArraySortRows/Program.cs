@@ -42,27 +42,12 @@ void SortRowsIn2DArray(int[,] arrayForSort)
     }
 }
 
-void NameArray(int[,] arrayToPrint, string name = "")
+void Print2DArray(int[,] arrayToPrint, string name = "")
 {
     if (!string.IsNullOrEmpty(name))
     {
-        Console.WriteLine();
-        int setWindowHeight = ((3 + (arrayToPrint.GetLength(1) * 8)) / 2) - name.Length / 2;
-        if (setWindowHeight < 0)
-        {
-            setWindowHeight = 0;
-            name = "---Длинное имя массива";
-        }
-        Console.SetCursorPosition(setWindowHeight, Console.WindowHeight - 1);
-        Console.WriteLine($"{name}");
-        // Центровка имени массива+ зависит от метода Print2DArray.
-        // Для корректной работы необходимо распечатывать массив с использованием \t.
+        Console.WriteLine($"\n--{name}--");
     }
-}
-
-void Print2DArray(int[,] arrayToPrint, string name = "")
-{
-    NameArray(arrayToPrint, name);
     Console.Write($"[X]\t");
     for (int i = 0; i < arrayToPrint.GetLength(1); i++)
     {
@@ -84,6 +69,6 @@ int arrayRow = 5;
 int arrayColumn = 5;
 int[,] array = GetArrayRandomNumbers(arrayRow, arrayColumn);
 
-Print2DArray(array, "<<Заданный массив>>");
+Print2DArray(array, "Заданный массив");
 SortRowsIn2DArray(array);
-Print2DArray(array, "<<Отсортированный массив>>");
+Print2DArray(array, "Отсортированный массив");
