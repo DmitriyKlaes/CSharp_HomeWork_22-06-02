@@ -3,6 +3,10 @@
 Напишите программу, которая будет находить строку с наименьшей суммой элементов.
 */
 
+// Получился объемный код. Это из-за того, что строк с наименьшей суммой может быть не одна.
+// Я попытался это учесь и у меня получилось.
+// Может быть всё можно было сделать проще... всегда есть куда расти =))
+
 int[,] GetArrayRandomNumbers(int rowNumber, int colNumber)
 {
     int[,] result = new int[rowNumber, colNumber];
@@ -10,18 +14,18 @@ int[,] GetArrayRandomNumbers(int rowNumber, int colNumber)
     {
         for (int j = 0; j < colNumber; j++)
         {
-            result[i, j] = new Random().Next(1, 5);
+            result[i, j] = new Random().Next(1, 10);
         }
     }
     return result;
 }
 
-int SummSingleRow(int[,] arrayForSort, int currentRow)
+int SummSingleRow(int[,] arrayForSummRow, int currentRow)
 {
     int result = 0;
-    for (int i = 0; i < arrayForSort.GetLength(1); i++)
+    for (int i = 0; i < arrayForSummRow.GetLength(1); i++)
     {
-        result = result + arrayForSort[currentRow, i];
+        result = result + arrayForSummRow[currentRow, i];
     }
     return result;
 }
@@ -29,66 +33,25 @@ int SummSingleRow(int[,] arrayForSort, int currentRow)
 int FindLowerSummRowOfArray(int[,] arrayForFind)
 {
     int tempSumm = 0;
-    int countRows = 1;
     int lowerRow = 0;
     int lowerSumm = SummSingleRow(arrayForFind, lowerRow);
-    System.Console.WriteLine(lowerSumm);
     for (int i = 1; i < arrayForFind.GetLength(0); i++)
     {
         tempSumm = SummSingleRow(arrayForFind, i);
-        System.Console.WriteLine(tempSumm);
-        if (tempSumm <= lowerSumm)
+        if (tempSumm < lowerSumm)
         {
-            if (tempSumm == lowerSumm)
-            {
-                countRows = countRows + 1;
-            }
-            else
-            {
-                countRows = 1;
-            }
-            lowerRow = i;
             lowerSumm = tempSumm;
         }
     }
-    if (countRows > 1)
-    {
-        System.Console.WriteLine($"таких строки {countRows}");
-    }
-    System.Console.WriteLine($"{lowerRow + 1} строка с индексом {lowerRow} и суммой {lowerSumm}");
     return lowerSumm;
 }
 
-string PrintResultOfFind(int[,] arrayForRusult, int lowerSumm)
+void Print2DArrayAndRowResult(int[,] arrayToPrint, int lowerSumm)
 {
-    int indexRow = 0;
-    int tempSumm = 0;
-    string result = string.Empty;
-    for (int i = 0; i < arrayForRusult.GetLength(0); i++)
-    {
-        tempSumm = SummSingleRow(arrayForRusult, i);
-        if(tempSumm == lowerSumm)
-        {
-            result = result + i;
-        }
-    }
-    return result;
-}
-
-bool FindIndexLowerRows(int[,] arrayForFindIndex, int currentRow, int lowerSummOfArray)
-{
-    bool result = false;
-    int tempSumm = SummSingleRow(arrayForFindIndex, currentRow);
-    if (tempSumm == lowerSummOfArray)
-    {
-        return true;
-    }
-    return result;
-}
-
-void Print2DArray(int[,] arrayToPrint, int lowerSumm)
-{
-    Console.Write($"[X]\t");
+    int tempSumm;
+    int countRow = 0;
+    string indexLower = string.Empty;
+    Console.Write($"\n[X]\t");
     for (int i = 0; i < arrayToPrint.GetLength(1); i++)
     {
         Console.Write($"[{i}]\t");
@@ -97,23 +60,35 @@ void Print2DArray(int[,] arrayToPrint, int lowerSumm)
     for (int i = 0; i < arrayToPrint.GetLength(0); i++)
     {
         Console.Write($"[{i}]\t");
+        tempSumm = SummSingleRow(arrayToPrint, i);
+        if (lowerSumm == tempSumm)
+        {
+            indexLower = indexLower + "[" + i + "] ";
+            countRow++;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+        }
         for (int j = 0; j < arrayToPrint.GetLength(1); j++)
         {
-            bool color = FindIndexLowerRows(arrayToPrint, i, lowerSumm);
-            if (color == true)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-            }
-                Console.Write($"{arrayToPrint[i, j]}\t");
+            Console.Write($"{arrayToPrint[i, j]}\t");
         }
         Console.ResetColor();
         Console.WriteLine();
     }
+    if (countRow > 1)
+    {
+        Console.WriteLine($"\nВсего {countRow} строк(и) с наименьшей суммой" +
+                                 $". Их индексы: {indexLower}");
+    }
+    else
+    {
+        Console.WriteLine($"\nИндекс строки с наименьшей суммой: {indexLower}");
+    }
 }
 
-int[,] test = GetArrayRandomNumbers(10, 3);
-int lowerSumm = FindLowerSummRowOfArray(test);
-Print2DArray(test, lowerSumm);
-System.Console.WriteLine($"вернул это {lowerSumm}");
-//int index = FindIndexLowerRows(test);
-//System.Console.WriteLine($"вернул такой интекс {index}");
+int arrayRow = 4;
+int arrayColumn = 3;
+int[,] array = GetArrayRandomNumbers(arrayRow, arrayColumn);
+
+int lowerSumm = FindLowerSummRowOfArray(array);
+Print2DArrayAndRowResult(array, lowerSumm);
+Console.WriteLine($"Наименьшая сумма элементов строки = {lowerSumm}");
