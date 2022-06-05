@@ -3,7 +3,7 @@
 которая упорядочит по убыванию элементы каждой строки двумерного массива.
 */
 
-int[,] GetArrayRandomNumbers(int rowNumber, int colNumber)
+int[,] Get2DArrayRandomNumbers(int rowNumber, int colNumber)
 {
     int[,] result = new int[rowNumber, colNumber];
     for (int i = 0; i < rowNumber; i++)
@@ -67,7 +67,7 @@ void Print2DArray(int[,] arrayToPrint, string name = "")
 
 int arrayRow = 5;
 int arrayColumn = 5;
-int[,] array = GetArrayRandomNumbers(arrayRow, arrayColumn);
+int[,] array = Get2DArrayRandomNumbers(arrayRow, arrayColumn);
 
 Print2DArray(array, "Заданный массив");
 SortRowsIn2DArray(array);

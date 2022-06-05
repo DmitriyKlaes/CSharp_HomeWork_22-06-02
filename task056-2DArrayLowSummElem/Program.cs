@@ -3,11 +3,12 @@
 Напишите программу, которая будет находить строку с наименьшей суммой элементов.
 */
 
-// Получился объемный код. Это из-за того, что строк с наименьшей суммой может быть не одна.
+// Получился объемный метод для печати массива. 
+// Это из-за того, что строк с наименьшей суммой может быть не одна.
 // Я попытался это учесь и у меня получилось.
 // Может быть всё можно было сделать проще... всегда есть куда расти =))
 
-int[,] GetArrayRandomNumbers(int rowNumber, int colNumber)
+int[,] Get2DArrayRandomNumbers(int rowNumber, int colNumber)
 {
     int[,] result = new int[rowNumber, colNumber];
     for (int i = 0; i < rowNumber; i++)
@@ -87,7 +88,7 @@ void Print2DArrayAndRowResult(int[,] arrayToPrint, int lowerSumm)
 
 int arrayRow = 4;
 int arrayColumn = 3;
-int[,] array = GetArrayRandomNumbers(arrayRow, arrayColumn);
+int[,] array = Get2DArrayRandomNumbers(arrayRow, arrayColumn);
 
 int lowerSumm = FindLowerSummRowOfArray(array);
 Print2DArrayAndRowResult(array, lowerSumm);
