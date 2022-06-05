@@ -47,6 +47,7 @@ int FindLowerSummRowOfArray(int[,] arrayForFind)
     return lowerSumm;
 }
 
+// Метод печатает массив, а так же результаты поиска, обозначенные в задаче.
 void Print2DArrayAndRowResult(int[,] arrayToPrint, int lowerSumm)
 {
     int tempSumm;
